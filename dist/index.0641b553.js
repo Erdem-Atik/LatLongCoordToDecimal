@@ -532,14 +532,26 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"bNKaB":[function(require,module,exports) {
+"use strict";
 var utm = require("9fb2114475f06efe");
-console.log(utm);
-console.log("hello");
+const inpValue = document.getElementById("inputCoord");
+const inpbtn = document.getElementById("inputBtn");
+let coordValue;
+const inpCoord = inpbtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    coordValue = inpValue.value;
+    console.log(parseLatLong(coordValue));
+});
 function parseLatLong(input) {
     if (!(input.toUpperCase() != input.toLowerCase())) return `${input}:the coordinate already seems as decimal`;
-    const parts = input.split(/[°'"]+/).join(" ").split(/[^\w\S]+/); // thanks to Shannon Antonio Black for regEx patterns 
-    const geoLetters = parts.filter((el)=>!+el);
-    const coordNumber = parts.filter((n)=>+n).map((nr)=>+nr);
+    const parts = input.split(/[°'"]+/).join(" ").split(/[^\w\S]+/); // thanks to Shannon Antonio Black(StackoverFlow user) for regEx patterns 
+    const replacedComa = parts.map((el)=>el.replace(",", ".")) // in case the given numbers include comma as decimal separator
+    ;
+    const geoLetters = replacedComa.filter((el)=>!+el);
+    geoLetters.filter((el)=>{
+        return el !== "";
+    });
+    const coordNumber = replacedComa.filter((n)=>+n).map((nr)=>+nr);
     const latNumber = coordNumber.slice(0, coordNumber.length / 2);
     const longNumber = coordNumber.slice(coordNumber.length / 2);
     const reducer = function(acc, coord, curInd) {
@@ -551,7 +563,6 @@ function parseLatLong(input) {
     ;
     if (geoLetters[1].toUpperCase() === "W" || geoLetters[1].toUpperCase() === "B") longDec = -longDec // B is abr. of batı (it means west in Turkish)
     ;
-    console.log(latDec);
     const dec = [
         {
             ltCoord: latDec,
@@ -562,7 +573,12 @@ function parseLatLong(input) {
             geoLet: geoLetters[1]
         }
     ];
-    return dec;
+    return [
+        latDec,
+        geoLetters[0],
+        longDec,
+        geoLetters[1]
+    ];
 }
 
 },{"9fb2114475f06efe":"iL8JN"}],"iL8JN":[function(require,module,exports) {
