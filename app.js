@@ -5,7 +5,6 @@ const inpbtn = document.getElementById('inputBtn')
 const convrtdCoord = document.getElementsByClassName('.convertedCoord')
 console.log(convrtdCoord);
 
-
 let coordValue;
 
 const inpCoord = inpbtn.addEventListener('click', function(event){
@@ -14,7 +13,6 @@ const inpCoord = inpbtn.addEventListener('click', function(event){
     console.log(parseLatLong(coordValue));
     let convertedValue = parseLatLong(coordValue)
 })
-
 
 function parseLatLong(input) {
 
