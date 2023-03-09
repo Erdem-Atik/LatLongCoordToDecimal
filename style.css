@@ -1,0 +1,11 @@
+body {
+    text-align: center;
+}
+form {
+    font-size: large;
+    padding-top:10REM;
+    display: inline-block;
+}
+.convertedCoord{
+    margin-top: 3REM;
+}
